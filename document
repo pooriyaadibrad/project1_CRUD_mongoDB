@@ -1,0 +1,12 @@
+# init virtual environment
+# windows
+py -m venv venv
+# linux
+sudo apt install python3-venv
+python3 -m venv venv
+# activate
+# windows
+    powershell
+    ./venv/Scripts/activate.ps1
+# linux
+source venv/bin/activate
