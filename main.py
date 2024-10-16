@@ -1,10 +1,15 @@
 from tkinter import *
 from tkinter import ttk
+from repository import *
 
 win=Tk()
 win.geometry("800x600")
 win.configure(background="#ECDFCC")
 win.title("CRUD")
+
+
+init()
+
 #def
 def ChangeButtonStyleIn(e):
     btnRegister.configure(fg='#ECDFCC',bg='#D6C0B3')
@@ -19,14 +24,21 @@ def ChangeButtonStyleOutSearch(e):
     btnSearch.configure(bg="#626F47",fg="#ECDFCC")
 
 def onClickRegister():
-    pass
+    person = {'name':txtName.get(), 'family': txtFamily.get(), 'field': txtField.get(), 'age': txtAge.get()}
+    register(person)
+    Tk()
+
+
 def on_select(e):
     selected_item=txtField.get()
     print(f"selected:{selected_item}")
+
 def change_header_color():
     style=ttk.Style()
     style.configure("Treeview.Heading",background="#A0D683",foreground="#54473F")
     style.map("Treeview.Heading",background=[('active','#E4E0E1')])
+
+
 academic_fields=["computer sience","civil engineering","Industrial Engineering","Physic"
     ,"Rights","Chemistry","Psychiatry","Architecture","Philosophy","Dentistry","Medicine"]
 #txt

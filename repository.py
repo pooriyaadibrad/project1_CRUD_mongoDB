@@ -1,4 +1,13 @@
-import pymongo
+from  pymongo import MongoClient
 
-def register():
+client = MongoClient("localhost", 27017)
+db = client['CRUD']
+persons = db['persons']
+
+
+def init():
     pass
+
+
+def register(person):
+    persons.insert_one(person)
