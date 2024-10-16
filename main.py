@@ -35,6 +35,12 @@ def onClickRegister():
                           
     messagebox.showinfo("ثبت اطلاعات", "عملیات موفق") 
 
+def FillTable():
+    allData = ReadData()
+    for data in allData:
+        InsertDataToTable(data)
+
+
 def CleanForm():
     txtName_var.set("")
     txtFamily_var.set("")
@@ -62,6 +68,23 @@ def change_header_color():
     style=ttk.Style()
     style.configure("Treeview.Heading",background="#A0D683",foreground="#54473F")
     style.map("Treeview.Heading",background=[('active','#E4E0E1')])
+
+
+def Search():
+    allData = ReadData()
+    print(type(allData))
+    Finded = []
+    str = txtSearch.get()
+    for item in allData:
+        if item['name'] == str or item['family'] == str or item['age'] == str or item['field'] == str :
+            Finded.append(item)
+    
+    if len(Finded) > 0:    
+        CleanTable()
+        for item in Finded:
+            InsertDataToTable(item)
+    else:
+        messagebox.showerror("","جستجو بی نتیجه بود")
 
 
 academic_fields=["computer sience","civil engineering","Industrial Engineering","Physic"
@@ -111,7 +134,7 @@ btnRegister.bind('<Enter>',ChangeButtonStyleIn)
 btnRegister.bind('<Leave>',ChangeButtonStyleOut)
 btnRegister.place(x=140,y=340)
 
-btnSearch=Button(win,text="Search",bg="#626F47",fg="#ECDFCC",font=('arial',10,'bold'),command=onClickRegister)
+btnSearch=Button(win,text="Search",bg="#626F47",fg="#ECDFCC",font=('arial',10,'bold'),command=Search)
 btnSearch.bind('<Enter>',ChangeButtonStyleInSearch)
 btnSearch.bind('<Leave>',ChangeButtonStyleOutSearch)
 btnSearch.place(x=380,y=400)
@@ -126,4 +149,8 @@ for i in range(len(columns)):
     student_tbl.column(columns[i],width=100)
 student_tbl.place(x=380,y=100)
 change_header_color()
+
+
+FillTable()
+
 win.mainloop()
