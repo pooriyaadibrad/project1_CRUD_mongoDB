@@ -1,6 +1,7 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk,messagebox
 from repository import *
+
 
 win=Tk()
 win.geometry("800x600")
@@ -26,7 +27,31 @@ def ChangeButtonStyleOutSearch(e):
 def onClickRegister():
     person = {'name':txtName.get(), 'family': txtFamily.get(), 'field': txtField.get(), 'age': txtAge.get()}
     register(person)
-    Tk()
+    allData = ReadData()
+    CleanTable()
+    CleanForm()
+    for data in allData:
+        InsertDataToTable(data)
+                          
+    messagebox.showinfo("ثبت اطلاعات", "عملیات موفق") 
+
+def CleanForm():
+    txtName_var.set("")
+    txtFamily_var.set("")
+    txtField_var.set("")
+    txtAge_var.set("")
+
+def ReadData():
+    allData = persons.find()
+    return allData
+
+def CleanTable():
+    for item in student_tbl.get_children():
+        student_tbl.delete(item)
+
+def InsertDataToTable(person):
+    student_tbl.insert('', 'end', values=[person['name'], person['family'], person['field'], person['age']])
+
 
 
 def on_select(e):
@@ -42,22 +67,28 @@ def change_header_color():
 academic_fields=["computer sience","civil engineering","Industrial Engineering","Physic"
     ,"Rights","Chemistry","Psychiatry","Architecture","Philosophy","Dentistry","Medicine"]
 #txt
-txtName=Entry(win,width=15,bd=5,font=('arial',15,'bold'),bg="white",fg="black")
+
+txtName_var = StringVar()
+txtName=Entry(win,width=15,bd=5,font=('arial',15,'bold'),bg="white",fg="black", textvariable=txtName_var)
 txtName.place(x=100,y=100)
 
-txtFamily=Entry(win,width=15,bd=5,font=('arial',15,'bold'),bg="white",fg="black")
+txtFamily_var = StringVar()
+txtFamily=Entry(win,width=15,bd=5,font=('arial',15,'bold'),bg="white",fg="black", textvariable=txtFamily_var)
 txtFamily.place(x=100,y=160)
 
-txtAge=Entry(win,width=15,bd=5,font=('arial',15,'bold'),bg="white",fg="black")
+txtAge_var= StringVar()
+txtAge=Entry(win,width=15,bd=5,font=('arial',15,'bold'),bg="white",fg="black", textvariable=txtAge_var)
 txtAge.place(x=100,y=220)
 
-txtField=ttk.Combobox(win,values=academic_fields,width=18,font=('arial'))
+txtField_var = StringVar()
+txtField=ttk.Combobox(win,values=academic_fields,width=18,font=('arial'), textvariable=txtField_var)
 txtField.set("Select Your Academic Field")
 txtField.place(x=100,y=280)
 txtField.bind("<<ComboboxSelected>>",on_select)
 txtField.current(0)
 
-txtSearch=Entry(win,width=27,bd=5,font=('arial',15,'bold'),bg="white",fg="black")
+txtSearch_var = StringVar()
+txtSearch=Entry(win,width=27,bd=5,font=('arial',15,'bold'),bg="white",fg="black", textvariable=txtSearch_var)
 txtSearch.place(x=460,y=400)
 
 #lbl
